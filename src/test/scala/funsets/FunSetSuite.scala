@@ -173,6 +173,26 @@ class FunSetSuite extends FunSuite {
     }
   }
 
+  test("exists test2") {
+    new TestSets {
+      val s4 = singletonSet(4)
+      val s5 = singletonSet(5)
+      val s7 = singletonSet(7)
+      val s1000 = singletonSet(1000)
+
+      val s = union(union(union(union(union(s1,s3), s4), s5), s7), s1000)
+
+      assert(exists(s, x => if(x==1) true else false), "exists 1")
+      assert(exists(s, x => if(x==3) true else false), "exists 3")
+      assert(exists(s, x => if(x==4) true else false), "exists 4")
+      assert(exists(s, x => if(x==5) true else false), "exists 5")
+      assert(exists(s, x => if(x==7) true else false), "exists 7")
+      assert(exists(s, x => if(x==1000) true else false), "exists 1000")
+    }
+  }
+
+
+
   test("map test") {
     new TestSets {
       val s400 = singletonSet(400)
@@ -184,4 +204,24 @@ class FunSetSuite extends FunSuite {
       printSet(ss)
     }
   }
+
+  test("test -1") {
+    //    {1,3,4,5,7,1000}
+    val s = union(singletonSet(1), union(singletonSet(3), union(singletonSet(4),
+      union(singletonSet(5), union(singletonSet(7), singletonSet(1000))))))
+    assert(contains(s, 1), "1")
+    assert(contains(s, 3), "3")
+    assert(contains(s, 4), "4")
+    assert(contains(s, 5), "5")
+    assert(contains(s, 7), "7")
+    assert(contains(s, 1000), "1000")
+    val d = map(s, x => x-1)
+    assert(contains(d, 0), "0")
+    assert(contains(d, 2), "2")
+    assert(contains(d, 3), "3")
+    assert(contains(d, 4), "4")
+    assert(contains(d, 6), "6")
+    assert(contains(d, 999), "999")
+  }
+
 }
