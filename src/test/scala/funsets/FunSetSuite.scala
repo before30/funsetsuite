@@ -156,4 +156,32 @@ class FunSetSuite extends FunSuite {
       assert(!contains(sResult, 5), "filter 5")
     }
   }
+
+  test("exists test") {
+    new TestSets {
+      val s400 = singletonSet(400)
+      val s100 = singletonSet(-100)
+
+      val s = union(union(union(union(s1,s2), s3), s400), s100)
+
+      assert(exists(s, x => if(x==1) true else false), "exists 1")
+      assert(exists(s, x => if(x==2) true else false), "exists 2")
+      assert(exists(s, x => if(x==3) true else false), "exists 3")
+      assert(exists(s, x => if(x==400) true else false), "exists 400")
+      assert(exists(s, x => if(x== -100) true else false), "exists -100")
+      assert(!exists(s, x => if(x== -999) true else false), "exists -999")
+    }
+  }
+
+  test("map test") {
+    new TestSets {
+      val s400 = singletonSet(400)
+      val s100 = singletonSet(-100)
+
+      val s = union(union(union(union(s1,s2), s3), s400), s100)
+      printSet(s)
+      val ss = map(s, x => x + 100)
+      printSet(ss)
+    }
+  }
 }
